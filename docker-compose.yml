@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: school-api.dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/SchoolApi/

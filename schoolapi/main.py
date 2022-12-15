@@ -2,6 +2,6 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get(path="/")
+@app.get(path="/users")
 def get_user():
-    return {"username": "Rey Eduardo Halsall Quintero"}
+    return {"username": "reduhq"}
