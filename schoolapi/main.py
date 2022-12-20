@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 
-from api.api_v1.api import api_router
-from db.db_setup import engine
-from db.models import user
+from .api.api_v1.api import api_router
+from .db.db_setup import engine
+from .db.models import user
 
-user.Base.metadata.create_all(bind=engine)
+# user.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="School API",
