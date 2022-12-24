@@ -10,8 +10,9 @@ from fastapi import Body, Path, Query
 
 #SQLAlchemy
 from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from ....db.db_setup import get_db
+from ....db.db_setup import get_db, get_async_db
 from ....db.utils import users
 from ....schemas.user import User, UserCreate
 
@@ -49,13 +50,13 @@ async def get_users(
     status_code= status.HTTP_200_OK
 )
 async def get_user_by_id(
-    db:Session = Depends(get_db),
+    db:AsyncSession = Depends(get_async_db),
     id:int = Path(
         ...,
         gt=0
     )
 ):
-    db_user = users.get_user_by_id(db=db, user_id=id)
+    db_user = await users.get_user_by_id(db=db, user_id=id)
     if db_user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
