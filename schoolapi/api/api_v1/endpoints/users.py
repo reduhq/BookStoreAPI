@@ -12,7 +12,7 @@ from fastapi import Body, Path, Query
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ....db.db_setup import get_db, get_async_db
+from ....db.db_setup import get_async_db
 from .... import crud, models, schemas
 from ....schemas.user import User, UserCreate
 
