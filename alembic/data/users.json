@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Rey Eduardo",
+        "last_name": "Halsall Quintero",
+        "username": "reduhq",
+        "email": "reyeduardohalsallquintero8@gmail.com",
+        "role": "admin",
+        "gender": "masculine",
+        "password": "reyeduardo836"
+    },
+    {
+        "name": "Farida",
+        "last_name": "Mutsaeva",
+        "username": "eva_farida",
+        "email": "evafarida@gmail.com",
+        "role": "student",
+        "gender": "feminine",
+        "password": "faridamutsaeva836"
+    },
+    {
+        "name": "Birin",
+        "last_name": "Ortega",
+        "username": "papiaurelio",
+        "email": "birin@gmail.com",
+        "role": "teacher",
+        "gender": "masculine",
+        "password": "aurelion74"
+    },
+    {
+        "name": "Miguel",
+        "last_name": "Hidalgo",
+        "username": "mambaout",
+        "email": "miguel@gmail.com",
+        "role": "student",
+        "gender": "masculine",
+        "password": "mambamiguel23"
+    }
+]
