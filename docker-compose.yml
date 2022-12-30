@@ -30,3 +30,14 @@ services:
       SQLALCHEMY_DATABASE_URL: "postgresql+psycopg2://sa:12345678@db:5432/schooldb"      
       SQLALCHEMY_DATABASE_URL_ASYNC: "postgresql+asyncpg://sa:12345678@db:5432/schooldb"      
     command: bash -c "alembic upgrade head && uvicorn schoolapi.main:app --reload --host 0.0.0.0 --port 8000"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - db
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "reduhq@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "reduhq"
