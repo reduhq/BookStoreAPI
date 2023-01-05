@@ -32,6 +32,14 @@ target_metadata = Base.metadata
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
+def get_url():
+    user = os.getenv("POSTGRES_USER", "postgres")
+    password = os.getenv("POSTGRES_PASSWORD", "")
+    host = os.getenv("DATABASE_HOST", "db")
+    port = os.getenv("DATABASE_PORT", "5432")
+    db = os.getenv("POSTGRES_DB", "schoolapi")
+    return f"postgresql+asyncpg://{user}:{password}@{host}:{port}/{db}"
+
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
@@ -45,7 +53,7 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    url = get_url()
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -71,9 +79,11 @@ async def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
+    configuration = config.get_section(config.config_ini_section)
+    configuration["sqlalchemy.url"] = get_url()
     connectable = AsyncEngine(
         engine_from_config(
-            config.get_section(config.config_ini_section),
+            configuration,
             prefix="sqlalchemy.",
             poolclass=pool.NullPool,
             future=True,

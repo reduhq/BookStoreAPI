@@ -3,12 +3,11 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-
-SQLALCHEMY_DATABASE_URL_ASYNC = os.environ.get('SQLALCHEMY_DATABASE_URL_ASYNC')
+from ..core.config import settings
 
 # ----- ASYNC ENGINE -----
 async_engine = create_async_engine(
-    SQLALCHEMY_DATABASE_URL_ASYNC, future=True
+    settings.SQLALCHEMY_DATABASE_URL_ASYNC, future=True
 )
 AsyncSessionLocal = sessionmaker(
     async_engine, class_=AsyncSession, expire_on_commit=False
