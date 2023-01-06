@@ -15,23 +15,15 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         result = await db.execute(query)
         return result.scalar_one_or_none()
 
-    # def create_user(self, db:Session, user:UserCreate) -> User:
-    #     db_user = User(name=user.name, email=user.email)
-    #     db.add(db_user)
-    #     db.commit()
-    #     db.refresh(db_user)
-    #     return db_user
+    async def authenticate(self, db:AsyncSession, email:str, password:str) -> Optional[User]:
+        user = await self.get_user_by_email(db, email)
+        if not user:
+            return None
+        if not user.password == password:
+            return None
+        return User
 
-    # async def get_user_by_id(db:AsyncSession, user_id:int):
-    #     query = (select(User).
-    #             where(user_id == User.id))
-    #     result = await db.execute(query)
-    #     return result.scalar_one_or_none()
-
-    # def get_user_by_id(db:Session, user_id:int):
-        # return db.query(User).filter(User.id == user_id).first()
-
-    # def get_users(db:Session, skip:int = 0, limit:int =5):
-    #     return db.query(User).offset(skip).limit(limit).all()
+    # async def is_active(self, db:AsyncSession, user:User):
+    #     return user.is_active
 
 user = CRUDUser(User)
