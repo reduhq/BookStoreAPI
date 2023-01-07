@@ -1,3 +1,5 @@
+from fastapi.encoders import jsonable_encoder
+
 from typing import Optional
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -5,10 +7,20 @@ from sqlalchemy.future import select
 
 from ..models.user import User
 from ..schemas.user import UserCreate, UserUpdate
+from ..core.security import get_password_hash
 
 from .base import CRUDBase
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
+    async def create(self, db:AsyncSession, model:UserCreate) -> User:
+        data_model =  jsonable_encoder(model)
+        user = User(**data_model)
+        user.password = get_password_hash(model.password)
+        db.add(user)
+        await db.commit()
+        await db.refresh(user)
+        return user
+
     async def get_user_by_email(self, db:AsyncSession, email:str) -> Optional[User]:
         query = (select(User).
                         where(User.email == email))

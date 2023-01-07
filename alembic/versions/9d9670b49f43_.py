@@ -29,7 +29,7 @@ def upgrade() -> None:
     sa.Column('email', sa.String(length=100), nullable=False),
     sa.Column('role', sa.Enum('admin', 'teacher', 'student', name='role'), nullable=False),
     sa.Column('gender', sa.Enum('masculine', 'feminine', name='gender'), nullable=False),
-    sa.Column('password', sa.String(length=50), nullable=False),
+    sa.Column('password', sa.String(length=60), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
 
