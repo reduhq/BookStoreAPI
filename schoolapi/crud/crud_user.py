@@ -7,7 +7,7 @@ from sqlalchemy.future import select
 
 from ..models.user import User
 from ..schemas.user import UserCreate, UserUpdate
-from ..core.security import get_password_hash
+from ..core.security import get_password_hash, verify_password
 
 from .base import CRUDBase
 
@@ -31,7 +31,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         user = await self.get_user_by_email(db, email)
         if not user:
             return None
-        if not user.password == password:
+        if not verify_password(password, user.password):
             return None
         return user
 
