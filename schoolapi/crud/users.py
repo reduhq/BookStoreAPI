@@ -21,7 +21,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             return None
         if not user.password == password:
             return None
-        return User
+        return user
 
     # async def is_active(self, db:AsyncSession, user:User):
     #     return user.is_active
