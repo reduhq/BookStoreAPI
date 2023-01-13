@@ -7,7 +7,7 @@ from jose import jwt
 
 from pydantic import ValidationError
 
-from ..db.db_setup import AsyncSessionLocal
+from ..db.session import AsyncSessionLocal
 from ..import crud, models, schemas
 from ..core.config import settings
 from ..core import security

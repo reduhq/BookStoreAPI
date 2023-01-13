@@ -17,4 +17,5 @@ RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; els
 
 COPY . /SchoolApi/
 
+ENV PYTHONPATH=/SchoolApi
 # CMD ["uvicorn", "schoolapi.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]

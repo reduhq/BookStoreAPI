@@ -24,7 +24,8 @@ services:
       - .:/SchoolApi/
     env_file:
       - .env    
-    command: bash -c "alembic upgrade head && uvicorn schoolapi.main:app --reload --host 0.0.0.0 --port 8000"
+    # command: bash -c "while true; do sleep 1; done"  # Infinite loop to keep container live doing nothing
+    command: ./start.sh
 
   pgadmin:
     image: dpage/pgadmin4

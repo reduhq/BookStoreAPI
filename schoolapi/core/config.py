@@ -1,7 +1,7 @@
 import secrets
 from typing import Optional
 
-from pydantic import BaseSettings, validator
+from pydantic import BaseSettings, validator, EmailStr
 
 class Settings(BaseSettings):
     # JWT
@@ -40,6 +40,10 @@ class Settings(BaseSettings):
         port = values.get("DATABASE_PORT")
         db = values.get("POSTGRES_DB")
         return f"postgresql+asyncpg://{user}:{password}@{host}:{port}/{db}"
+
+    # First SuperUser
+    FIRST_SUPERUSER_EMAIL:EmailStr
+    FIRST_SUPERUSER_PASSWORD:str
 
     class Config:
         case_sensitive = True
