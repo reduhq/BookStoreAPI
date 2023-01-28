@@ -24,6 +24,8 @@ class UserCreate(UserBase):
 #Properties to receive via API on update
 class UserUpdate(UserBase):
     password:Optional[str] = Field(default=None)
+    gender:Optional[Gender] = Field(default=None)
+    role:Optional[Role] = Field(default=None)
 
 class UserInDBBase(UserBase):
     id:int = Field(...)

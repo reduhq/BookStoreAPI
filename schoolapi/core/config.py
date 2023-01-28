@@ -4,6 +4,8 @@ from typing import Optional
 from pydantic import BaseSettings, validator, EmailStr
 
 class Settings(BaseSettings):
+    API_V1_STR: str = "/api/v1"
+    
     # JWT
     SECRET_KEY = secrets.token_urlsafe(32)
     ACCESS_TOKEN_EXPIRES_MINUTES:int = 1
@@ -42,6 +44,7 @@ class Settings(BaseSettings):
         return f"postgresql+asyncpg://{user}:{password}@{host}:{port}/{db}"
 
     # First SuperUser
+    EMAIL_TEST_USER:EmailStr = "test@example.com"
     FIRST_SUPERUSER_EMAIL:EmailStr
     FIRST_SUPERUSER_PASSWORD:str
 
