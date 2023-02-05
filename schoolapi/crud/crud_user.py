@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
+from schoolapi.enums.UserEnum import Role
 from ..models.user import User
 from ..schemas.user import UserCreate, UserUpdate
 from ..core.security import get_password_hash, verify_password
@@ -34,6 +35,15 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         if not verify_password(password, user.password):
             return None
         return user
+
+    async def is_superuser(self, db:AsyncSession, model:User) -> bool:
+        return model.role == Role.admin
+
+    async def is_teacher(self, db:AsyncSession, model:User) -> bool:
+        return model.role == Role.teacher
+
+    async def is_student(self, db:AsyncSession, model:User) -> bool:
+        return model.role == Role.student
 
     # async def is_active(self, db:AsyncSession, user:User):
     #     return user.is_active
