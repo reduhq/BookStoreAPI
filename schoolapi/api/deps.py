@@ -13,7 +13,7 @@ from ..core.config import settings
 from ..core import security
 
 reusable_oauth2 = OAuth2PasswordBearer(
-    tokenUrl = "/login/access-token"
+    tokenUrl = f"{settings.API_V1_STR}/login/access-token"
 )
 
 #DB Utilities

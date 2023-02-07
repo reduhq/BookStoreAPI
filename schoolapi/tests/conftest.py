@@ -25,14 +25,14 @@ async def tmp_db() -> AsyncGenerator:
     async with AsyncSessionLocal() as db:
         yield db
 
-# @pytest.fixture(scope='module')
-# async def client() -> AsyncGenerator:
-#     async with AsyncClient(app) as c:
-#         yield c
+@pytest_asyncio.fixture(scope='module')
+async def client() -> AsyncGenerator:
+    async with AsyncClient(app=app, base_url="http://127.0.0.1:8000") as c:
+        yield c
 
-# @pytest.fixture(scope='module')
-# async def superuser_token_headers(client:AsyncClient) -> dict[str,str]:
-#     return await get_superuser_token_headers(client)
+@pytest_asyncio.fixture(scope='module')
+async def superuser_token_headers(client:AsyncClient) -> dict[str,str]:
+    return await get_superuser_token_headers(client)
 
 # @pytest.fixture(scope='module')
 # def normal_user_token_headers(client:AsyncClient, db:AsyncSession) -> dict[str,str]:

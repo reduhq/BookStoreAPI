@@ -1,7 +1,3 @@
-#python
-
-#Pydantic
-
 #FastAPI
 from fastapi import APIRouter
 from fastapi import status, HTTPException
@@ -9,24 +5,22 @@ from fastapi import Depends
 from fastapi import Body, Path, Query
 
 #SQLAlchemy
-from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ....api.deps import get_async_db
+from ....api.deps import get_async_db, get_current_user
 from .... import crud, models, schemas
-from ....schemas.user import User, UserCreate
 
-#Models
+
 router = APIRouter()
 
 @router.post(
-    path="", 
-    response_model=User,
+    path="/", 
+    response_model=schemas.User,
     status_code=status.HTTP_200_OK
 )
 async def create_user(
     db:AsyncSession = Depends(get_async_db),
-    user:UserCreate = Body(...)
+    user:schemas.UserCreate = Body(...)
 ):
     db_user = await crud.user.get_user_by_email(db=db, email=user.email) 
     if db_user:
@@ -37,7 +31,7 @@ async def create_user(
     db_user = await crud.user.create(db=db, model=user)
     return db_user
 
-@router.get(path="", response_model=list[User])
+@router.get(path="/", response_model=list[schemas.User])
 async def get_users(
     db:AsyncSession = Depends(get_async_db),
     skip:int = Query(default=0),
@@ -47,8 +41,21 @@ async def get_users(
     return users
 
 @router.get(
+    path="/me",
+    response_model=schemas.User,
+    status_code=status.HTTP_200_OK
+) 
+async def read_user_me(
+    current_user:models.User = Depends(get_current_user)
+)-> any:
+    """
+    Get Current User
+    """
+    return current_user
+
+@router.get(
     path="/{id}", 
-    response_model=User,
+    response_model=schemas.User,
     status_code= status.HTTP_200_OK
 )
 async def get_user_by_id(
