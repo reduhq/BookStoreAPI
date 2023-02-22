@@ -7,6 +7,7 @@ from schoolapi.core.config import settings
 
 app = FastAPI(
     title="School API",
+    openapi_url=f"{settings.API_V1_STR}/openai.json",
     description="",
     version="0.0.1",
     contact={

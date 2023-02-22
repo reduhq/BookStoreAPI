@@ -16,7 +16,7 @@ class UserCreate(UserBase):
     name:str = Field(...)
     last_name:str = Field(...)
     username:str = Field(...)
-    email:str = Field(...)
+    email:EmailStr = Field(...)
     role:Role = Field(default=None)
     gender:Gender = Field(default=None)
     password:str = Field(...)

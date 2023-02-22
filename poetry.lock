@@ -937,22 +937,6 @@ tomli = {version = ">=1.0.0", markers = "python_version < \"3.11\""}
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
 
 [[package]]
-name = "pytest-anyio"
-version = "0.0.0"
-description = "The pytest anyio plugin is built into anyio. You don't need this package."
-category = "dev"
-optional = false
-python-versions = "*"
-files = [
-    {file = "pytest-anyio-0.0.0.tar.gz", hash = "sha256:b41234e9e9ad7ea1dbfefcc1d6891b23d5ef7c9f07ccf804c13a9cc338571fd3"},
-    {file = "pytest_anyio-0.0.0-py2.py3-none-any.whl", hash = "sha256:dc8b5c4741cb16ff90be37fddd585ca943ed12bbeb563de7ace6cd94441d8746"},
-]
-
-[package.dependencies]
-anyio = "*"
-pytest = "*"
-
-[[package]]
 name = "pytest-asyncio"
 version = "0.20.3"
 description = "Pytest support for asyncio"
@@ -1238,4 +1222,4 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "8a60fb0ed5d0f85953df9401714e7dc155bee97e267bb9476fb9f03967d89db1"
+content-hash = "b9cd82005b7417046f8c32a33002d2abdd67e8622000f88fffae47b311f11306"

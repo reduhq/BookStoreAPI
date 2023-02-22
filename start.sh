@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-#w Let the DB start
+# Let the DB start
 python3 ./schoolapi/backend_pre_start.py
 
 # Run the migrations
@@ -10,4 +10,4 @@ alembic upgrade head
 python3 ./schoolapi/initial_data.py
 
 # Run the api
-uvicorn schoolapi.main:app --reload --host 0.0.0.0 --port 8000
+exec uvicorn schoolapi.main:app --reload --host 0.0.0.0 --port 8000

@@ -9,8 +9,8 @@ logger = logging.getLogger(__name__)
 
 
 async def init() -> None:
-    db = AsyncSessionLocal()
-    await init_db(db)
+    async with AsyncSessionLocal() as db:
+        await init_db(db)
 
 
 async def main() -> None:
