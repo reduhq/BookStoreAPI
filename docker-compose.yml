@@ -4,8 +4,10 @@ services:
   db: # EXPOSED_PORT = 5432
     image: postgres
     restart: always
-    # volumes:
-    #   - app-db-data:/var/lib/postgresql/data/pgdata
+    volumes:
+      - app-db-data:/var/lib/postgresql/data/pgdata
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
     env_file:
       - .env
     expose:
@@ -36,3 +38,6 @@ services:
       - "80:80"
     env_file:
       - .env
+
+volumes:
+  app-db-data:
