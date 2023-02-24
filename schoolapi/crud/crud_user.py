@@ -1,6 +1,6 @@
 from fastapi.encoders import jsonable_encoder
 
-from typing import Optional
+from typing import Optional, Union
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
@@ -21,6 +21,16 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         await db.commit()
         await db.refresh(user)
         return user
+
+    async def update(self, db:AsyncSession, *, db_obj:User, obj_in:Union[UserUpdate, dict[str, any]]) -> User:
+        if isinstance(obj_in, dict):
+            update_data = obj_in
+        else:
+            update_data = obj_in.dict(exclude_unset=True)
+        if update_data["password"]:
+            hashed_password = get_password_hash(update_data["password"])
+            update_data["password"] = hashed_password
+        return await super().update(db,db_obj=db_obj, obj_in=update_data)
 
     async def get_user_by_email(self, db:AsyncSession, email:str) -> Optional[User]:
         query = (select(User).

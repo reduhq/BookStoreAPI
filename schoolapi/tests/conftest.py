@@ -34,8 +34,8 @@ async def client() -> AsyncGenerator:
 async def superuser_token_headers(client:AsyncClient) -> dict[str,str]:
     return await get_superuser_token_headers(client)
 
-# @pytest.fixture(scope='module')
-# def normal_user_token_headers(client:AsyncClient, db:AsyncSession) -> dict[str,str]:
-#     return authentication_token_from_email(
-#         client = client, email = settings.EMAIL_TEST_USER, db = db
-#     )
+@pytest_asyncio.fixture(scope='module')
+async def normal_user_token_headers(client:AsyncClient, tmp_db:AsyncSession) -> dict[str,str]:
+    return await authentication_token_from_email(
+        client = client, email = settings.EMAIL_TEST_USER, db = tmp_db
+    )

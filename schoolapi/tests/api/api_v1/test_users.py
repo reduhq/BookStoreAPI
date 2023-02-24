@@ -16,3 +16,14 @@ async def test_get_users_superuser_me(
     assert current_user["role"] is not Role.teacher.value
     assert current_user["role"] is not Role.student.value
     assert current_user["email"] == settings.FIRST_SUPERUSER_EMAIL
+
+@pytest.mark.asyncio
+async def test_get_users_normal_user_me(
+    client:AsyncClient, normal_user_token_headers:dict[str,str]
+) -> None:
+    r = await client.get(f"{settings.API_V1_STR}/users/me", headers=normal_user_token_headers)
+    current_user = r.json()
+    assert current_user["role"] != Role.admin.value
+    assert current_user["role"] != Role.teacher.value
+    assert current_user["role"] == Role.student.value
+    assert current_user["email"] == settings.EMAIL_TEST_USER

@@ -1,5 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from httpx import AsyncClient
+import pdb
 
 from schoolapi.tests.utils.utils import random_lower_string, random_email
 from schoolapi import crud
@@ -51,8 +52,8 @@ async def authentication_token_from_email(client:AsyncClient, email:str, db:Asyn
             gender="masculine",
             password=password
         )
-        await crud.user.create(user_create)
+        await crud.user.create(db, user_create)
     else:
         user_in_update = UserUpdate(password=password)
-        user = await crud.user.update(db, user, user_in_update)
+        user = await crud.user.update(db, db_obj=user, obj_in=user_in_update)
     return await user_authentication_header(client=client, email=email, password=password)
