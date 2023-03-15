@@ -1,10 +1,12 @@
 import secrets
 from typing import Optional
 
-from pydantic import BaseSettings, validator, EmailStr
+from pydantic import AnyHttpUrl, BaseSettings, validator, EmailStr
 
 class Settings(BaseSettings):
+    PROJECT_NAME:str
     API_V1_STR: str = "/api/v1"
+    SERVER_HOST:AnyHttpUrl = "https://127.0.0.1:8000/docs"
     
     # JWT
     SECRET_KEY = secrets.token_urlsafe(32)
@@ -47,6 +49,32 @@ class Settings(BaseSettings):
     EMAIL_TEST_USER:EmailStr = "test@example.com"
     FIRST_SUPERUSER_EMAIL:EmailStr
     FIRST_SUPERUSER_PASSWORD:str
+
+    # Email - SMTP
+    SMTP_TLS:bool = True
+    SMTP_HOST:Optional[str] = None
+    SMTP_PORT:Optional[int] = None
+    SMTP_USER:Optional[str] = None
+    SMTP_PASSWORD:Optional[str] = None
+    EMAILS_FROM_EMAIL:Optional[EmailStr] = None
+    EMAILS_FROM_NAME:Optional[str] = None
+
+    @validator("EMAILS_FROM_NAME")
+    def get_project_name(cls, v:Optional[str], values:dict[str, any]) -> str:
+        if not v:
+            return values["PROJECT_NAME"]
+        return v
+
+    EMAIL_TEMPLATES_DIR:str = "/SchoolApi/schoolapi/email-templates/build"
+    EMAILS_ENABLED:bool = False
+
+    @validator("EMAILS_ENABLED", pre=True)
+    def get_emails_enabled(cls, v:bool, values:dict[str, any]) -> bool:
+        return bool(
+            values.get("SMTP_HOST")
+            and values.get("SMTP_PORT")
+            and values.get("EMAILS_FROM_EMAIL")
+        )
 
     class Config:
         case_sensitive = True

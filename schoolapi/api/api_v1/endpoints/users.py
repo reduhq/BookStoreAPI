@@ -7,8 +7,14 @@ from fastapi import Body, Path, Query
 #SQLAlchemy
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from schoolapi.core.config import settings
+from schoolapi.utils import send_new_account_email
 from ....api.deps import get_async_db, get_current_user
 from .... import crud, models, schemas
+
+import logging
+import sys
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 
 router = APIRouter()
@@ -29,6 +35,10 @@ async def create_user(
             detail="This email address already exists"
         )
     db_user = await crud.user.create(db=db, model=user)
+    if settings.EMAILS_ENABLED and user.email:
+        await send_new_account_email(
+            email_to=user.email, username=user.username, password=user.password
+        )
     return db_user
 
 @router.get(path="/", response_model=list[schemas.User])
