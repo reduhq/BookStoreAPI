@@ -1,6 +1,7 @@
 from datetime import timedelta
 from datetime import datetime
 import logging
+from typing import Optional
 
 from jose import jwt
 
@@ -71,7 +72,7 @@ async def send_reset_password_email(email_to:EmailStr, email:str, token:str) -> 
         }
     )
 
-async def generate_password_reset_token(email:EmailStr):
+async def generate_password_reset_token(email:EmailStr) -> str:
     delta = timedelta(hours=settings.EMAIL_RESET_TOKEN_EXPIRE_HOURS)
     now = datetime.utcnow()
     expires = now + delta
@@ -86,3 +87,10 @@ async def generate_password_reset_token(email:EmailStr):
         algorithm="HS256" 
     )
     return encode_jwt
+
+async def verify_password_reset_token(token:str) -> Optional[str]:
+    try:
+        decoded_token = jwt.decode(token, key=settings.SECRET_KEY, algorithms=["HS256"])
+        return decoded_token["sub"]
+    except jwt.JWTError:
+        return None
