@@ -5,7 +5,7 @@ services:
     image: postgres
     restart: always
     volumes:
-      - app-db-data:/var/lib/postgresql/data/pgdata
+      - ${VOLUME_NAME-app-db-data}:/var/lib/postgresql/data/pgdata
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
     env_file:
@@ -17,6 +17,11 @@ services:
     build:
       context: .
       dockerfile: school-api.dockerfile
+      args:
+        INSTALL_DEV: ${INSTALL_DEV-false}
+    environment:
+      - SERVER_HOST=https://127.0.0.1:8000/docs
+      - SMTP_HOST=${SMTP_HOST}
     depends_on:
       - db
     restart: always
@@ -41,3 +46,4 @@ services:
 
 volumes:
   app-db-data:
+  test-db-data:

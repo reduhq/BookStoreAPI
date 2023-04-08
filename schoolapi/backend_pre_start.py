@@ -29,9 +29,9 @@ async def init() -> None:
 
 
 async def main() -> None:
-    logger.info("Initializing service")
+    logger.info("Initializing backend service")
     await init()
-    logger.info("Service finished initializing")
+    logger.info("Backend service finished initializing")
 
 
 if __name__ == "__main__":

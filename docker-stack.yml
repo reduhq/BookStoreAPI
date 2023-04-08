@@ -1,0 +1,108 @@
+name: schoolapi
+services:
+  api:
+    build:
+      context: /home/reduhq/Desktop/SchoolApi
+      dockerfile: school-api.dockerfile
+      args:
+        INSTALL_DEV: "true"
+    command:
+    - ./start.sh
+    depends_on:
+      db:
+        condition: service_started
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: "5432"
+      EMAILS_FROM_EMAIL: reduhq@schoolapi.com
+      FIRST_SUPERUSER_EMAIL: admin@admin.com
+      FIRST_SUPERUSER_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: reduhq@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: reduhq
+      POSTGRES_DB: schooldb
+      POSTGRES_PASSWORD: "12345678"
+      POSTGRES_USER: sa
+      PROJECT_NAME: SchoolAPI
+      SERVER_HOST: https://127.0.0.1:8000/docs
+      SMTP_HOST: ""
+      SMTP_PASSWORD: e783132ffa872c
+      SMTP_PORT: "2525"
+      SMTP_USER: 37352c1ef8c368
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 8000
+      published: "8000"
+      protocol: tcp
+    restart: always
+    volumes:
+    - type: bind
+      source: /home/reduhq/Desktop/SchoolApi
+      target: /SchoolApi
+      bind:
+        create_host_path: true
+  db:
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: "5432"
+      EMAILS_FROM_EMAIL: reduhq@schoolapi.com
+      FIRST_SUPERUSER_EMAIL: admin@admin.com
+      FIRST_SUPERUSER_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: reduhq@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: reduhq
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: schooldb
+      POSTGRES_PASSWORD: "12345678"
+      POSTGRES_USER: sa
+      PROJECT_NAME: SchoolAPI
+      SMTP_HOST: ""
+      SMTP_PASSWORD: e783132ffa872c
+      SMTP_PORT: "2525"
+      SMTP_USER: 37352c1ef8c368
+    expose:
+    - "5432"
+    image: postgres
+    networks:
+      default: null
+    restart: always
+    volumes:
+    - type: volume
+      source: test-db-data
+      target: /var/lib/postgresql/data/pgdata
+      volume: {}
+  pgadmin:
+    depends_on:
+      db:
+        condition: service_started
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: "5432"
+      EMAILS_FROM_EMAIL: reduhq@schoolapi.com
+      FIRST_SUPERUSER_EMAIL: admin@admin.com
+      FIRST_SUPERUSER_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: reduhq@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: reduhq
+      POSTGRES_DB: schooldb
+      POSTGRES_PASSWORD: "12345678"
+      POSTGRES_USER: sa
+      PROJECT_NAME: SchoolAPI
+      SMTP_HOST: ""
+      SMTP_PASSWORD: e783132ffa872c
+      SMTP_PORT: "2525"
+      SMTP_USER: 37352c1ef8c368
+    image: dpage/pgadmin4
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 80
+      published: "80"
+      protocol: tcp
+    restart: always
+networks:
+  default:
+    name: schoolapi_default
+volumes:
+  test-db-data:
+    name: schoolapi_test-db-data

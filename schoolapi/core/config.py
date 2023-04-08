@@ -6,7 +6,7 @@ from pydantic import AnyHttpUrl, BaseSettings, validator, EmailStr
 class Settings(BaseSettings):
     PROJECT_NAME:str
     API_V1_STR: str = "/api/v1"
-    SERVER_HOST:AnyHttpUrl = "https://127.0.0.1:8000/docs"
+    SERVER_HOST:AnyHttpUrl
     
     # JWT
     SECRET_KEY = secrets.token_urlsafe(32)

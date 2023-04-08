@@ -21,16 +21,17 @@ async def init() -> None:
     try:
         async with AsyncSessionLocal() as db:
         # Try to create session to check if DB is awake
-            await db.execute("SELECT 1")
+            n = await db.execute("SELECT 1")
+            logger.info(f"The test service was completed successfully: {n}")
     except Exception as e:
         logger.error(e)
         raise e
 
 
 async def main() -> None:
-    logger.info("Initializing service")
+    logger.info("Initializing test service")
     await init()
-    logger.info("Service finished initializing")
+    logger.info("Test service finished initializing")
 
 
 if __name__ == "__main__":
