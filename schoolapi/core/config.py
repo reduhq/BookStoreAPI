@@ -65,6 +65,7 @@ class Settings(BaseSettings):
             return values["PROJECT_NAME"]
         return v
 
+    EMAIL_RESET_TOKEN_EXPIRE_HOURS:int = 48
     EMAIL_TEMPLATES_DIR:str = "/SchoolApi/schoolapi/email-templates/build"
     EMAILS_ENABLED:bool = False
 

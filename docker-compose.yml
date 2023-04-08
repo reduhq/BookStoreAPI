@@ -20,7 +20,7 @@ services:
       args:
         INSTALL_DEV: ${INSTALL_DEV-false}
     environment:
-      - SERVER_HOST=https://127.0.0.1:8000/docs
+      - SERVER_HOST=https://127.0.0.1:8000
       - SMTP_HOST=${SMTP_HOST}
     depends_on:
       - db
