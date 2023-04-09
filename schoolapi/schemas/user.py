@@ -17,15 +17,14 @@ class UserCreate(UserBase):
     last_name:str = Field(...)
     username:str = Field(...)
     email:EmailStr = Field(...)
-    role:Role = Field(default=None)
-    gender:Gender = Field(default=None)
+    role:Role = Field(...)
+    gender:Gender = Field(...)
     password:str = Field(...)
 
 #Properties to receive via API on update
 class UserUpdate(UserBase):
     password:Optional[str] = Field(default=None)
     gender:Optional[Gender] = Field(default=None)
-    role:Optional[Role] = Field(default=None)
 
 class UserInDBBase(UserBase):
     id:int = Field(...)

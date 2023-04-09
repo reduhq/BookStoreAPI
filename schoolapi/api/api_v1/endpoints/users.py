@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from fastapi import status, HTTPException
 from fastapi import Depends
 from fastapi import Body, Path, Query
+from fastapi.encoders import jsonable_encoder
 
 #SQLAlchemy
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -40,6 +41,22 @@ async def create_user(
             email_to=user.email, username=user.username, password=user.password
         )
     return db_user
+
+@router.put(
+    path="/me",
+    response_model=schemas.User,
+    status_code=status.HTTP_200_OK
+)
+async def update_user_me(
+    user_in:schemas.UserUpdate = Body(...),
+    current_user:models.User = Depends(get_current_user),
+    db:AsyncSession = Depends(get_async_db)
+) -> models.User:
+    """
+    Update own user
+    """
+    user = await crud.user.update(db, db_obj=current_user, obj_in=user_in)
+    return user
 
 @router.get(path="/", response_model=list[schemas.User])
 async def get_users(

@@ -23,7 +23,7 @@ services:
       POSTGRES_PASSWORD: "12345678"
       POSTGRES_USER: sa
       PROJECT_NAME: SchoolAPI
-      SERVER_HOST: https://127.0.0.1:8000/docs
+      SERVER_HOST: https://127.0.0.1:8000
       SMTP_HOST: ""
       SMTP_PASSWORD: e783132ffa872c
       SMTP_PORT: "2525"

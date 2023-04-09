@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     
     # JWT
     SECRET_KEY = secrets.token_urlsafe(32)
-    ACCESS_TOKEN_EXPIRES_MINUTES:int = 1
+    ACCESS_TOKEN_EXPIRES_MINUTES:int = 30
     
     # Postgres
     DATABASE_HOST:str
