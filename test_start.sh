@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 set -e
 
-python /SchoolApi/schoolapi/tests_pre_start.py
+python /BookStore/bookstore/tests_pre_start.py
 
-bash /SchoolApi/schoolapi/scripts/test.sh "$@"
+bash /BookStore/bookstore/scripts/test.sh "$@"

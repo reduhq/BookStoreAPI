@@ -16,7 +16,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: school-api.dockerfile
+      dockerfile: bookstore-api.dockerfile
       args:
         INSTALL_DEV: ${INSTALL_DEV-false}
     environment:
@@ -28,7 +28,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - .:/SchoolApi/
+      - .:/BookStore/
     env_file:
       - .env    
     # command: bash -c "while true; do sleep 1; done"  # Infinite loop to keep container live doing nothing
