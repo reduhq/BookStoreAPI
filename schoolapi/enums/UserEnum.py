@@ -2,8 +2,8 @@ import enum
 
 class Role(enum.Enum):
     admin = "admin"
-    teacher = "teacher"
-    student = "student"
+    writer = "writer"
+    reader = "reader"
 
 class Gender(enum.Enum):
     masculine = "masculine"

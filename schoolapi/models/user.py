@@ -1,6 +1,8 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Enum, Text
 from sqlalchemy.orm import relationship
 
+from schoolapi.models.user_book import User_Book
+
 from ..db.base_class import Base
 from ..enums.UserEnum import Role, Gender
 
@@ -14,3 +16,5 @@ class User(Base):
     role = Column(Enum(Role), nullable=False)
     gender = Column(Enum(Gender), nullable=False)
     password = Column(String(60), nullable=False)
+
+    books = relationship("Book", secondary=User_Book, back_populates="users")
