@@ -15,4 +15,5 @@ class User(Base):
     gender = Column(Enum(Gender), nullable=False)
     password = Column(String(60), nullable=False)
 
+    published_books = relationship("Book", back_populates='writer')
     books = relationship("Book", secondary="user_book", back_populates="users")

@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "schoolapi"
+name = "bookstore"
 version = "0.1.0"
 description = ""
 authors = ["ReyEduardo836 <reyeduardohalsallquintero8@gmail.com>"]

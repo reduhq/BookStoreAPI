@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, Text
+from sqlalchemy import Column, Integer, String, Date, Text, ForeignKey
 from sqlalchemy.orm import relationship
 
 from bookstore.db.base_class import Base
@@ -14,5 +14,7 @@ class Book(Base):
     book_genre = Column(String(50), nullable=False)
     language = Column(String(50), nullable=False)
     image_url = Column(String(200), nullable=False)
+    writer_id = Column(Integer, ForeignKey("user.id"))
 
+    writer = relationship("User", back_populates="published_books")
     users = relationship("User", secondary="user_book", back_populates="books")
