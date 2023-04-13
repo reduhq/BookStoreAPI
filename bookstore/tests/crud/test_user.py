@@ -64,7 +64,7 @@ async def test_check_if_user_is_superuser(tmp_db:AsyncSession) -> None:
         password=password
     )
     user = await crud.user.create(db=tmp_db, model=user_create)
-    is_superuser = await crud.user.is_superuser(tmp_db, user)
+    is_superuser = crud.user.is_superuser(tmp_db, user)
     assert is_superuser == True
 
 @pytest.mark.asyncio
@@ -81,7 +81,7 @@ async def test_check_if_user_is_reader(tmp_db:AsyncSession) -> None:
         password=password
     )
     user = await crud.user.create(tmp_db, user_create)
-    is_reader = await crud.user.is_reader(tmp_db, user)
+    is_reader = crud.user.is_reader(tmp_db, user)
     assert is_reader == True
 
 @pytest.mark.asyncio
@@ -98,7 +98,7 @@ async def test_check_if_user_is_writer(tmp_db:AsyncSession) -> None:
         password=password
     )
     user = await crud.user.create(tmp_db, user_create)
-    is_writer = await crud.user.is_writer(tmp_db, user)
+    is_writer = crud.user.is_writer(tmp_db, user)
     assert is_writer == True
 
 @pytest.mark.asyncio

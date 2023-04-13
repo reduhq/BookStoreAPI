@@ -47,13 +47,13 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             return None
         return user
 
-    async def is_superuser(self, db:AsyncSession, model:User) -> bool:
+    def is_superuser(self, db:AsyncSession, model:User) -> bool:
         return model.role == Role.admin
 
-    async def is_reader(self, db:AsyncSession, model:User) -> bool:
+    def is_reader(self, db:AsyncSession, model:User) -> bool:
         return model.role == Role.reader
 
-    async def is_writer(self, db:AsyncSession, model:User) -> bool:
+    def is_writer(self, db:AsyncSession, model:User) -> bool:
         return model.role == Role.writer
 
     # async def is_active(self, db:AsyncSession, user:User):
