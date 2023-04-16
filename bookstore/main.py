@@ -6,7 +6,7 @@ from bookstore.core.config import settings
 # user.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="School API",
+    title="BookStore API",
     openapi_url=f"{settings.API_V1_STR}/openai.json",
     description="",
     version="0.0.1",

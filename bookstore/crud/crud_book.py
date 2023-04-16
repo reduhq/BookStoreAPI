@@ -39,4 +39,7 @@ class CRUDBook(CRUDBase[Book, BookCreate, BookUpdate]):
         result = await db.execute(query)
         return result.scalars().all()
 
+    async def remove_written_book(self, db:AsyncSession, book_id:int):
+        return await super().remove(db, id=book_id) 
+
 book = CRUDBook(Book)
