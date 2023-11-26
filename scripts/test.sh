@@ -20,5 +20,5 @@ fi
 # docker volume rm schoolapi_test-db-data Remove possibly previous broken stacks left hanging after an error
 docker compose -f docker-stack.yml up -d
 sleep 10
-docker compose -f docker-stack.yml exec -T api bash /BookStore/test_start.sh "$@"
+docker compose -f docker-stack.yml exec -T api bash ./test_start.sh "$@"
 docker compose -f docker-stack.yml down -v --remove-orphans
