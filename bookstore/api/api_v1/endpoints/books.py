@@ -1,7 +1,7 @@
 from typing import Optional
 from fastapi import APIRouter
 from fastapi import status, HTTPException
-from fastapi import Body, Query, Path
+from fastapi import Body, Query, Path, UploadFile, File
 from fastapi import Depends
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -17,8 +17,15 @@ router = APIRouter()
     status_code=status.HTTP_200_OK
 )
 async def create_book(
+    isbn:str,
+    title:str,
+    author:str,
+    editorial:str,
+    description:str,
+    book_genre:str,
+    language:str,
+    image:UploadFile = File(...),
     current_user:models.User = Depends(get_current_user),
-    book_in:schemas.BookCreate = Body(...),
     db:AsyncSession = Depends(get_async_db)
 ):
     """
