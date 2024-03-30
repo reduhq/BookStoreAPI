@@ -76,6 +76,11 @@ class Settings(BaseSettings):
             and values.get("SMTP_PORT")
             and values.get("EMAILS_FROM_EMAIL")
         )
+    
+    # Cloudinary
+    CLOUD_NAME:str
+    API_KEY:str
+    API_SECRET:str 
 
     class Config:
         case_sensitive = True

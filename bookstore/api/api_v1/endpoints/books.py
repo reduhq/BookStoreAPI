@@ -4,6 +4,9 @@ from fastapi import status, HTTPException
 from fastapi import Body, Query, Path, UploadFile, File
 from fastapi import Depends
 
+import cloudinary
+import cloudinary.uploader
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from bookstore import models, schemas, crud
@@ -36,6 +39,27 @@ async def create_book(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="This user is not allowed to create a book"
         )
+    # Validating if the image has a valid format
+    if not image.content_type in ["image/png", "image/jpeg", "image/webp"]:
+        raise HTTPException(
+            status_code=status.HTTP_406_NOT_ACCEPTABLE,
+            detail="This is not a valid image"
+        )
+    # Uploading the Image to Cloudinary
+    response = cloudinary.uploader.upload(image.file)
+    image_url = response['secure_url']
+    
+    book_in = schemas.BookCreate(
+        isbn = isbn,
+        title = title,
+        author = author,
+        editorial = editorial,
+        description = description,
+        book_genre = book_genre,
+        language = language,
+        image_url = image_url,
+    )
+    
     bookdb = await crud.book.create(db, book_in, current_user.id)
     return bookdb
 
